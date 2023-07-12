@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="flash.png">
+    <title>Automation</title>
+</head>
+
+<body>
+    <form action="">
+        <div class="form-field">
+            <label for="sheet">Sheet Name : </label>
+            <input type="text" name="sheet" id="sheet" placeholder="Ex: Insurance" required>
+        </div>
+        <div class="form-field">
+            <label for="start">Start Row : </label>
+            <input type="text" name="start" id="start" class="numb" placeholder="Ex: 201" required>
+        </div>
+        <div class="form-field">
+            <label for="num">Number of Rows : </label>
+            <input type="text" name="rows" id="rows" class="numb" placeholder="Ex: 1500" required>
+        </div>
+        <button>Run</button>
+    </form>
+    <div class="notifs">
+        <h4>Messages</h4>
+        <div class="messages">
+            <p class="message" id="message">This is a message</p>
+        </div>
+    </div>
+</body>
+
+</html>
