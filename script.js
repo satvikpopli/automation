@@ -2,7 +2,7 @@
 
 const btn = document.querySelector("button");
 const numberInputs = document.querySelectorAll(".numb");
-const url = "https://script.google.com/macros/s/AKfycbwXYpuooNfXWWLy02B22smZYzruJ3PuZQZfqve-hhj9z_-ylB6nlo9wvgMkhMZAu3HQ/exec";
+const url = "https://script.google.com/macros/s/AKfycbzp5mI1AAtz8iPUE9HqOxE5Hf3BsiUE4a__EZ_mDOVNLp-3_9L4eTmWgnPUBhp4qk6BXQ/exec";
 
 numberInputs.forEach((input) => {
     input.addEventListener("keydown", (e) => {
