@@ -62,30 +62,3 @@ form button {
 form button:hover {
     background-color: #555;
 }
-
-.notifs {
-    width: 40%;
-    padding: 2rem;
-    border-left: 2px solid black;
-    /* flex: 1; */
-}
-
-.notifs h4{
-    text-align: center;
-}
-
-.notifs .messages {
-    padding: 2rem;
-}
-
-.notifs p {
-    margin-top: 1rem;
-    font-size: 1.6rem;
-    color: red;
-}
-
-.notifs p::before {
-    content: '>>>';
-    margin-right: 1rem;
-    color: black;
-}

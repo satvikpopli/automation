@@ -2,6 +2,7 @@
 
 const btn = document.querySelector("button");
 const numberInputs = document.querySelectorAll(".numb");
+const url = "https://script.google.com/macros/s/AKfycbwXYpuooNfXWWLy02B22smZYzruJ3PuZQZfqve-hhj9z_-ylB6nlo9wvgMkhMZAu3HQ/exec";
 
 numberInputs.forEach((input) => {
     input.addEventListener("keydown", (e) => {
@@ -20,7 +21,6 @@ numberInputs.forEach((input) => {
 
 // GET Request for Results from API with given data
 const fetchResults = async (data) => {
-    const url = "https://script.google.com/macros/s/AKfycbzJj26PGZUcm3e7Lq5AL3HYsj6PoO6eRBWaUnnMEj7SC_GOubl7JE2n1LFuy-z6D9HA/exec";
     const params = new URLSearchParams(data);
     const fullUrl = `${url}?${params}`;
     const res = await fetch(fullUrl);
@@ -29,48 +29,64 @@ const fetchResults = async (data) => {
 };
 
 // POST Request for Results to API with given data
-const postResults = async (data, results) => {
+const postResults = async (data, results) => {  
     data["results"] = results;
-    const url = "https://script.google.com/macros/s/AKfycbzJj26PGZUcm3e7Lq5AL3HYsj6PoO6eRBWaUnnMEj7SC_GOubl7JE2n1LFuy-z6D9HA/exec";
-    const res = await fetch(url, {
+    console.log(data);
+    // send data to API
+    fetch(url, {
+        // allow CORS
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
         body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+    }).then((res) => {
+        // enable button and show success message
+        btn.style.cursor = "pointer";
+        btn.style.backgroundColor = "#333";
+        btn.disabled = false;
+        btn.innerText = "Run";
+        alert("Process Complete");
+    }).catch((err) => {
+        // enable button and show error message
+        btn.style.cursor = "pointer";
+        btn.style.backgroundColor = "#333";
+        btn.disabled = false;
+        btn.innerText = "Run";
+        alert("Process Complete");
     });
-    const data_1 = await res.json();
-    console.log(data_1);
 };
 
-const sendRequests = (data, links) => {
+const sendRequests = async (data, links) => {
     let results = [];
     for (let i = 0; i < links.length; i++) {
-        try {
-            fetch(links[i]).then((res) => {
-                res.json().then((data) => {
-                    results.push(data);
-                }).catch((err) => {
-                    results.push(err);
-                });
-            });
-        } catch (error) {
-            console.log("ERROR-1: ", error);
-        }
+        const res = await fetch(links[i]);
+        const data_1 = await res.json();
+        results.push(data_1);
     }
-    console.log(results);
-    postResults(data, results);
+    if (results.length > 0) {
+        results = results.map((result) => {
+            return result.message;
+        });
+        postResults(data, results);
+    }
 };
 
 
 btn.addEventListener("click", async (e) => {
     e.preventDefault();
+    // disable button and show loading spinner
+    btn.style.cursor = "not-allowed";
+    btn.style.backgroundColor = "#555";
+    btn.disabled = true;
+    btn.innerText = "Processing...";
     const form = document.querySelector("form");
     const formData = new FormData(form);
     const data = {};
     for (let [key, value] of formData.entries()) {
         data[key] = value;
     }
+    
     const links = await fetchResults(data);
     sendRequests(data, links);
 });
